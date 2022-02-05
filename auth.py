@@ -53,7 +53,9 @@ def signup():
         # redirect to login page
         return redirect(url_for('auth.login'))
 
-# logout page
-@auth.route('/logout')
+# signout page
+@auth.route('/signout')
+@login_required
 def logout():
-    return 'logout'
+    logout_user()
+    return redirect(url_for('main.index'))

@@ -3,11 +3,12 @@ from flask import Flask, flash, jsonify, redirect, render_template, request, ses
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_session import Session
+from flask_login import login_user, logout_user, login_required, current_user
 from tempfile import mkdtemp
 import sqlite3
 
 # user-made imports
-from helpers import require_login, bail
+from helpers import bail
 from initialize import create_app, db
 
 # Database stuff
@@ -19,13 +20,13 @@ main = Blueprint('main', __name__)
 
 @main.route("/")
 def index():
-    """ Index """
     # render index
     return render_template("index.html")
 
 @main.route("/profile")
+@login_required
 def profile():
-    return "Profile"
+    return "Welcome, " + current_user.email
 
 def errorhandler(e):
     # Handle Errors
