@@ -12,8 +12,8 @@ from helpers import bail
 from initialize import create_app, db
 
 # Database stuff
-#dbconn = sqlite3.connect("assignments.sqlite")
-#db = dbconn.cursor()
+# dbconn = sqlite3.connect("assignments.sqlite")
+# db = dbconn.cursor()
 
 # main blueprint
 main = Blueprint('main', __name__)
@@ -26,7 +26,11 @@ def index():
 @main.route("/profile")
 @login_required
 def profile():
-    return "Welcome, " + current_user.email
+    return "Welcome, " + current_user.email + "!"
+
+@main.route("/addassignment")
+def addassignment():
+    return render_template("addassignment.html")
 
 def errorhandler(e):
     # Handle Errors
