@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %} 
+    Add Assignment
+{% endblock %}
+
+{% block main %} 
+<div class="main">
+    <form class="assignment-form">
+        <h3>Assignment Details</h3>
+        <div class="assignment-field">
+            <label for="name">Name </label><br>
+            <input type="text" name="name" size="50">
+        </div>
+        <div class="assignment-field">
+            <label for="class">Class </label><br>
+            <input type="text" name="class" size="50">
+        </div>
+        <div class="assignment-field">
+            <label for="instructor">Instructor </label><br>
+            <input type="text" name="instructor" size="50">
+        </div>
+        <div class="assignment-field">
+            <label for="end-date">Submission Date </label><br>
+            <input type="date" name="end-date">
+        </div>
+        <div class="assignment-field">
+            <label for="file">Questions </label><br>
+            <input type="file" name="file">
+        </div>
+        <div class="form-buttons">
+            <div class="submit">
+                <input type="submit" value="Submit">
+            </div>
+            <div class="cancel">
+                <input type="button" value="Cancel">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -32,6 +32,14 @@ input[type=submit] {
     cursor: pointer;
 }
 
+input[type=button] {
+    color: white;
+    background-color: #FF5C5C;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .main {
     background-color: whitesmoke;
     display: flex;
@@ -78,6 +86,35 @@ input[type=submit] {
     background-color: #C1DEAE;
     border-radius: 5px;
     width: fit-content;
+}
+
+.cancel {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #FF5C5C;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+.assignment-form {
+    margin: 30px 0px;
+    padding: 25px 30px 50px 30px;
+    border-radius: 20px;
+    background-color: #E8E8A6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.assignment-field {
+    margin: 10px 0px;
 }
 
 #email {
