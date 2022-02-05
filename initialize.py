@@ -8,7 +8,7 @@ def create_app():
     app = Flask(__name__)
     
     app.config['SECRET_KEY'] = 'testingSecretKey123'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/users.sqlite'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # initialize database

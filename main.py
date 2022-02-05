@@ -10,20 +10,8 @@ import sqlite3
 from helpers import require_login, bail
 from initialize import create_app, db
 
-
-#app = Flask(__name__)
-#app.config["TEMPLATES_AUTO_RELOAD"] = True
-
-# Don't Cache responses
-#@app.after_request
-#def after_request(response):
-#    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-#    response.headers["Expires"] = 0
-#    response.headers["Pragma"] = "no-cache"
-#    return response
-
 # Database stuff
-#dbconn = sqlite3.connect("db.sqlite")
+#dbconn = sqlite3.connect("assignments.sqlite")
 #db = dbconn.cursor()
 
 # main blueprint
@@ -40,7 +28,7 @@ def profile():
     return "Profile"
 
 def errorhandler(e):
-    """Handle error"""
+    # Handle Errors
     if not isinstance(e, HTTPException):
         e = InternalServerError()
     return bail(e.name, e.code)
