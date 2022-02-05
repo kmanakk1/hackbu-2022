@@ -12,11 +12,11 @@ def login():
     if(request.method == 'GET'):
         return render_template("signin.html")
     else:
-        email = request.form.get("email")
+        email = request.form.get("email").lower()
         password = request.form.get("password")
         remember = True if request.form.get('remember') else False
         user = User.query.filter_by(email=email).first()
-        if user:
+        if not user:
             flash('Invalid login')
             return redirect(url_for('auth.login'))
         elif not check_password_hash(user.password, password):
@@ -33,7 +33,7 @@ def signup():
     if(request.method == 'GET'):
         return render_template("signup.html")
     else:
-        email = request.form.get("email")
+        email = request.form.get("email").lower()
         password = request.form.get("password")
         confirm_password = request.form.get("confirm-password")
 
