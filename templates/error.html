@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block title %} 
-    Main Page
+    Error: {{ errcode }}
 {% endblock %}
 
 {% block main %} 
-    Hello, World!
+    <h1>{{ errcode }} {{ errmsg}}</h1>
 {% endblock %}

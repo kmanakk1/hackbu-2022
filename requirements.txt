@@ -1,2 +1,6 @@
-Flask
+flask
+flask-session
+flask-sqlalchemy
+werkzeug
+flask-login
 requests
