@@ -13,7 +13,7 @@ class Assignment(db.Model):
     name = db.Column(db.String(100))
     course = db.Column(db.String(100))
     prof = db.Column(db.String(100))
-    date = db.Column(datetime)
+    date = db.Column(db.DateTime)
     file = db.Column(db.String(100), unique=True)
 
 class Answer(db.Model):
