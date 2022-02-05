@@ -1,0 +1,85 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Poppins", serif;
+}
+
+body {
+    margin: 0px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+h3 {
+    padding-bottom: 25px;
+    font-size: 2.5em;
+}
+
+input {
+    padding: 2px;
+    border: none;
+    border-radius: 5px;
+    height: 2em;
+    cursor: text;
+}
+
+input[type=submit] {
+    background-color: #C1DEAE;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.main {
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-container {
+    margin: 50px 0px;
+    padding: 25px 30px 50px 30px;
+    border-radius: 20px;
+    background-color: #E8E8A6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.email-field {
+    margin: 5px 0px 25px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.email-selector {
+    padding: 0px 5px;
+    height: 1.9em;
+    border-radius: 0px 5px 5px 0px;
+    background-color: #C1DEAE;
+}
+
+.password-field {
+    padding: 10px 0px 0px 0px;
+}
+
+.confirm-password-field {
+    padding: 10px 0px;
+}
+
+.submit {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #C1DEAE;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+#email {
+    border-radius: 5px 0px 0px 5px;
+}

@@ -1,0 +1,22 @@
+* {
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  footer {
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #C1DEAE;
+  }
+  
+  .footer-p {
+    font-size: 0.8em;
+  }
+  
+  .left-footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
