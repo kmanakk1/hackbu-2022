@@ -10,11 +10,7 @@ import os
 # custom imports
 from helpers import bail, valid_filename, rand_str, date_str
 from initialize import create_app, db
-from models import Assignment
-
-# Database stuff
-# dbconn = sqlite3.connect("assignments.sqlite")
-# db = dbconn.cursor()
+from models import Assignment, Answer
 
 UPLOAD_DIR = "static/uploads/"
 
@@ -79,10 +75,54 @@ def addassignment():
 @main.route("/assign", methods=['GET'])
 def assign():
     id = request.args.get("id")
+    answers = ""
     if id:
         a = Assignment.query.filter_by(id=id).first()
-        return render_template("assignmentpage.html", id=id, name=a.name, course=a.course, prof=a.prof, date=a.date, file="/" + UPLOAD_DIR + a.file)
+        # get comments/answers
+        dbresults = Answer.query.filter_by(assignment=id)
+        for ans in dbresults:
+            answers = answers + f"""
+                <div class="answer-card">
+                <span><h4 class="assignment-card-link">{ans.user}</h4></a></span><br>
+                <span><form action="/vote" method="POST">
+                <input type="hidden" value="{ans.id}" name="id"/>
+                <input type="hidden" value="{id}" name="qid"/>
+                <input type="submit" name="vote" value="Up"/>: {ans.upvote}, <input type="submit" name="vote" value="Down"/>: {ans.downvote}</span><br>
+                </form>
+                <span>{ans.response}</span><br>
+                </div>
+            """
+        return render_template("assignmentpage.html", id=id, name=a.name, course=a.course, prof=a.prof,\
+                 date=a.date, file="/" + UPLOAD_DIR + a.file, answers=answers)
     return bail("Invalid assignment", 404)
+
+@main.route("/vote", methods=['GET', 'POST'])
+@login_required
+def vote():
+    id = request.form.get("id")
+    qid = request.form.get("qid")
+
+    vote = request.form['submit_button']
+    if id:
+        ans = Answer.query.filter_by(id=id).first()
+        if vote == "Up":
+            ans.upvote += 1
+        elif vote == "Down":
+            ans.downvote += 1
+        db.session.commit()
+    return redirect(f"/assign?id={qid}")
+
+@main.route("/post", methods=['GET', 'POST'])
+@login_required
+def post():
+    id = request.form.get("assignid")
+    response = request.form.get("answer")
+    email = current_user.email
+    if id:
+        newPost = Answer(user=email, assignment=id, response=response)
+        db.session.add(newPost)
+        db.session.commit()
+    return redirect(f"/assign?id={id}")
 
 def errorhandler(e):
     # Handle Errors

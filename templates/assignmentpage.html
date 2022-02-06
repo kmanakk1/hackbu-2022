@@ -13,5 +13,19 @@
         <span>Due Date: {{ date }}</span><br>
         <span><a href="{{ file }}">File</a></span>
     </div>
+    <form action="/post" class="post-container" method="POST">
+        <h4 class="question">Post Response</h4>
+        <input type="hidden" name="assignid" value="{{ id }}"/>
+        <label for="answer"></label>
+        <textarea name="answer" id="answer" cols="70" rows="10"></textarea>
+        <input type="submit" value="Post">
+    </form>
+    {% if answers %}
+        {% autoescape false %}
+            <h3 id="results-title">Answers</h3>
+            {{ answers }}
+        {% endautoescape %}
+    {% endif %}
 </div>
+
 {% endblock %}
