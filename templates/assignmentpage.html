@@ -1,37 +1,20 @@
+<<<<<<< HEAD
+=======
 {% extends "base.html" %}
 
 {% block title %} 
-    Add Assignment
+    View Assignment
 {% endblock %}
 
-{% block main %} 
-<div class="assignments-answers">
-    <div class="assignment-questions">
-      <a href="">Download assignment</a>
+{% block main %}
+<div class="main">
+    <div class="assignment-card">
+        <span><h4 class="assignment-card-link">Name: {{ name }}</h4></span><br>
+        <span>Class: {{ course }}</span><br>
+        <span>Instructor: {{ prof }}</span><br>
+        <span>Due Date: {{ date }}</span><br>
+        <span><a href="{{ file }}">File</a></span>
     </div>
-    <form class="post-container">
-    <h4 class="question">Question</h4>
-    <label for="answer"></label>
-    <textarea name="answer" id="answer" cols="70" rows="10"></textarea>
-    <input type="file" name="answer-file" id="answer-file">
-    <input type="submit" value="Post">
-    </form>
-
-    <form class="post-container">
-    <h4 class="question">Question</h4>
-    <label for="answer"></label>
-    <textarea name="answer" id="answer" cols="70" rows="10"></textarea>
-    <input type="file" name="answer-file" id="answer-file">
-    <input type="submit" value="Post">
-    </form>
-
-    <form class="post-container">
-    <h4 class="question">Question</h4>
-    <label for="answer"></label>
-    <textarea name="answer" id="answer" cols="70" rows="10"></textarea>
-    <input type="file" name="answer-file" id="answer-file">
-    <input type="submit" value="Post">
-    </form>
 </div>
-
-  {% endblock %}
+{% endblock %}
+>>>>>>> edeb6a692d9f3043ca34190dd8e16f6a7ea86e38

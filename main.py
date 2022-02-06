@@ -5,6 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, login_required, current_user
 from tempfile import mkdtemp
+import os
 
 # custom imports
 from helpers import bail, valid_filename, rand_str, date_str
@@ -23,7 +24,7 @@ main = Blueprint('main', __name__)
 @main.route("/", methods=['GET', 'POST'])
 def index():
     # render index
-    search = request.form.get("search")
+    search = request.args.get("search")
     textresults = ""
     if search:
         # do search
@@ -31,7 +32,7 @@ def index():
         for assign in dbresults:
             textresults = textresults + f"""
                 <div class="assignment-card">
-                <span><a href="/static/uploads/{assign.file}"><h4 class="assignment-card-link">{assign.name}</h6></a></span><br>
+                <span><a href="/assign?id={assign.id}"><h4 class="assignment-card-link">{assign.name}</h4></a></span><br>
                 <span>{assign.course}</span><br>
                 <span>{assign.prof}</span><br>
                 <span>{assign.date}</span><br>
@@ -57,24 +58,31 @@ def addassignment():
         a_date = date_str(request.form.get("end-date"))
 
         # File upload
-        #if 'file' not in request.files:
-        #    flash('No file part')
-        #    return redirect(url_for('main.addassignment'))
-        #file = request.files['file']
-        #
-        #if file.filename == '':
-        #    flash('No selected file')
-        #    return redirect(url_for('main.addassignment'))
-        #if file and valid_filename(file.filename):
-        #    origfilen = secure_filename(file.filename)
-        #    filename = rand_str(16) + origfilen.split(".")[-1]
-        #    file.save(os.path.join(UPLOAD_DIR, filename))
-        filename="doesnotexist.pdf"
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(url_for('main.addassignment'))
+        file = request.files['file']
+        
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(url_for('main.addassignment'))
+        if file and valid_filename(file.filename):
+            origfilen = secure_filename(file.filename)
+            filename = rand_str(16) + "." + origfilen.split(".")[-1]
+            file.save(os.path.join(UPLOAD_DIR, filename))
+        #filename="doesnotexist.pdf"
         newAssignment = Assignment(user=user, name=a_name, course=a_course, prof=a_prof, date=a_date, file=filename)
         db.session.add(newAssignment)
         db.session.commit()
         return redirect(url_for('main.index', name=filename))
-        
+
+@main.route("/assign", methods=['GET'])
+def assign():
+    id = request.args.get("id")
+    if id:
+        a = Assignment.query.filter_by(id=id).first()
+        return render_template("assignmentpage.html", id=id, name=a.name, course=a.course, prof=a.prof, date=a.date, file="/" + UPLOAD_DIR + a.file)
+    return bail("Invalid assignment", 404)
 
 def errorhandler(e):
     # Handle Errors
@@ -90,4 +98,6 @@ for code in default_exceptions:
 
 if __name__ == "__main__":
     db.create_all(app=create_app()) # create and initialize database
+    if not os.path.exists(UPLOAD_DIR):
+        os.makedirs(UPLOAD_DIR)
     app.run()
