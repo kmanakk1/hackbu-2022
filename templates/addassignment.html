@@ -6,7 +6,7 @@
 
 {% block main %} 
 <div class="main">
-    <form class="assignment-form" method="POST">
+    <form class="assignment-form" method="POST" enctype="multipart/form-data">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="notification is-danger">
