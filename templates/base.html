@@ -18,8 +18,15 @@
           </h1>
         </div>
         <div class="right-header">
-            {% if current_user %}
-                Welcome, {{ current_user.email }}
+            
+            {% if not current_user.is_authenticated %}
+            <div style="margin: 5px;"><a href="/signin">Login</a></div>
+            <div><a href="/signup">Signup</a></div>
+            {% else %}
+                
+                <div style="margin: 5px;">{{ current_user.email }}</div>
+                <div style="margin: 5px;"><a href="/addassignment">Upload</a></div>
+                <div style="margin: 5px;"><a href="/signout">Logout</a></div>
             {% endif %}
            <img class="pp" href="" width="64" height="64">
         </div>

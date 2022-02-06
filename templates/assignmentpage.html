@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 
 {% block title %} 
@@ -14,4 +15,36 @@
         <span><a href="{{ file }}">File</a></span>
     </div>
 </div>
+=======
+{% extends "base.html" %}
+
+{% block title %} 
+    View Assignment
+{% endblock %}
+
+{% block main %}
+<div class="main">
+    <div class="assignment-card">
+        <span><h4 class="assignment-card-link">Name: {{ name }}</h4></span><br>
+        <span>Class: {{ course }}</span><br>
+        <span>Instructor: {{ prof }}</span><br>
+        <span>Due Date: {{ date }}</span><br>
+        <span><a href="{{ file }}">File</a></span>
+    </div>
+    <form action="/post" class="post-container" method="POST">
+        <h4 class="question">Post Response</h4>
+        <input type="hidden" name="assignid" value="{{ id }}"/>
+        <label for="answer"></label>
+        <textarea name="answer" id="answer" cols="70" rows="10"></textarea>
+        <input type="submit" value="Post">
+    </form>
+    {% if answers %}
+        {% autoescape false %}
+            <h3 id="results-title">Answers</h3>
+            {{ answers }}
+        {% endautoescape %}
+    {% endif %}
+</div>
+
+>>>>>>> 197f6970bf434ac636623d014167a7fe0140af03
 {% endblock %}
