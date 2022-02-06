@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} 
+    View Assignment
+{% endblock %}
+
+{% block main %}
+<div class="main">
+    <div class="assignment-card">
+        <span><h4 class="assignment-card-link">Name: {{ name }}</h4></span><br>
+        <span>Class: {{ course }}</span><br>
+        <span>Instructor: {{ prof }}</span><br>
+        <span>Due Date: {{ date }}</span><br>
+        <span><a href="{{ file }}">File</a></span>
+    </div>
+</div>
+{% endblock %}

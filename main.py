@@ -23,7 +23,7 @@ main = Blueprint('main', __name__)
 @main.route("/", methods=['GET', 'POST'])
 def index():
     # render index
-    search = request.form.get("search")
+    search = request.args.get("search")
     textresults = ""
     if search:
         # do search
@@ -31,7 +31,7 @@ def index():
         for assign in dbresults:
             textresults = textresults + f"""
                 <div class="assignment-card">
-                <span><a href="/static/uploads/{assign.file}"><h4 class="assignment-card-link">{assign.name}</h6></a></span><br>
+                <span><a href="/assign?id={assign.id}"><h4 class="assignment-card-link">{assign.name}</h4></a></span><br>
                 <span>{assign.course}</span><br>
                 <span>{assign.prof}</span><br>
                 <span>{assign.date}</span><br>
@@ -74,7 +74,14 @@ def addassignment():
         db.session.add(newAssignment)
         db.session.commit()
         return redirect(url_for('main.index', name=filename))
-        
+
+@main.route("/assign", methods=['GET'])
+def assign():
+    id = request.args.get("id")
+    if id:
+        a = Assignment.query.filter_by(id=id).first()
+        return render_template("assignmentpage.html", id=id, name=a.name, course=a.course, prof=a.prof, date=a.date, file="/" + UPLOAD_DIR + a.file)
+    return bail("Invalid assignment", 404)
 
 def errorhandler(e):
     # Handle Errors

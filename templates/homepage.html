@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %} 
-    Add Assignment
+    Homepage
 {% endblock %}
 
 {% block main %}
 <div class="main">
     <div class="search-bar-container">
-        <form method="POST">
+        <form method="GET">
             <input class="search-bar" type="text" name="search" size="100">
             <input class="search-button" type="submit" value="Search">
         </form>
@@ -20,7 +20,8 @@
             {{ results }}
         {% endautoescape %}
         {% endif %}
-        <!-- Sample card to show assignment 
+        
+        <!-- Sample card to show assignment  
         <div class="assignment-card">
             <span><a href=""><h4 class="assignment-card-link">Name</h6></a></span><br>
             <span>Class</span><br>
@@ -38,7 +39,7 @@
             <span>Class</span><br>
             <span>Instructor</span><br>
             <span>Submission Date</span><br>
-        </div> -->
+        </div>-->
     </div>
 </div>
 {% endblock %}
