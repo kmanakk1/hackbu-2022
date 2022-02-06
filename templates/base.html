@@ -18,7 +18,10 @@
           </h1>
         </div>
         <div class="right-header">
-          <img class="pp" href="" width="64" height="64">
+            {% if current_user %}
+                Welcome, {{ current_user.email }}
+            {% endif %}
+           <img class="pp" href="" width="64" height="64">
         </div>
     </header>
     <div class="main">
