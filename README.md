@@ -2,4 +2,5 @@
 
 ## Running flask
 pip3 install -r requirements.txt
+
 ./main.py
