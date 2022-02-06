@@ -25,15 +25,17 @@ def index():
     if search:
         # do search
         dbresults = Assignment.query.filter(Assignment.name.like('%' + search + '%'))
-        for assign in dbresults:
-            textresults = textresults + f"""
-                <div class="assignment-card">
-                <span><a href="/assign?id={assign.id}"><h4 class="assignment-card-link">{assign.name}</h4></a></span><br>
-                <span>{assign.course}</span><br>
-                <span>{assign.prof}</span><br>
-                <span>{assign.date}</span><br>
-                </div>
-            """
+    else:
+        dbresults = Assignment.query
+    for assign in dbresults:
+        textresults = textresults + f"""
+            <div class="assignment-card">
+            <span><a href="/assign?id={assign.id}"><h4 class="assignment-card-link">{assign.name}</h4></a></span><br>
+            <span>{assign.course}</span><br>
+            <span>{assign.prof}</span><br>
+            <span>{assign.date}</span><br>
+            </div>
+        """
     return render_template("homepage.html", results=textresults)
 
 @main.route("/profile")
