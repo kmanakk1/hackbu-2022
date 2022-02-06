@@ -1,36 +1,80 @@
 #!/usr/bin/env python3
-from flask import Flask, flash, jsonify, redirect, render_template, request, session, Blueprint
+from flask import Flask, flash, url_for, jsonify, redirect, render_template, request, session, Blueprint
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_session import Session
+from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, login_required, current_user
 from tempfile import mkdtemp
-import sqlite3
 
-# user-made imports
-from helpers import bail
+# custom imports
+from helpers import bail, valid_filename, rand_str, date_str
 from initialize import create_app, db
+from models import Assignment
 
 # Database stuff
 # dbconn = sqlite3.connect("assignments.sqlite")
 # db = dbconn.cursor()
 
+UPLOAD_DIR = "static/uploads/"
+
 # main blueprint
 main = Blueprint('main', __name__)
 
-@main.route("/")
+@main.route("/", methods=['GET', 'POST'])
 def index():
     # render index
-    return render_template("index.html")
+    search = request.form.get("search")
+    textresults = ""
+    if search:
+        # do search
+        dbresults = Assignment.query.filter(Assignment.name.like('%' + search + '%'))
+        for assign in dbresults:
+            textresults = textresults + f"""
+                <div class="assignment-card">
+                <span><a href="/static/uploads/{assign.file}"><h4 class="assignment-card-link">{assign.name}</h6></a></span><br>
+                <span>{assign.course}</span><br>
+                <span>{assign.prof}</span><br>
+                <span>{assign.date}</span><br>
+                </div>
+            """
+    return render_template("homepage.html", results=textresults)
 
 @main.route("/profile")
 @login_required
 def profile():
     return "Welcome, " + current_user.email + "!"
 
-@main.route("/addassignment")
+@main.route("/addassignment", methods=['GET', 'POST'])
+@login_required
 def addassignment():
-    return render_template("addassignment.html")
+    if(request.method == 'GET'):
+        return render_template("addassignment.html")
+    else:
+        user = current_user.email
+        a_name = request.form.get("name")
+        a_course = request.form.get("class")
+        a_prof = request.form.get("instructor")
+        a_date = date_str(request.form.get("end-date"))
+
+        # File upload
+        #if 'file' not in request.files:
+        #    flash('No file part')
+        #    return redirect(url_for('main.addassignment'))
+        #file = request.files['file']
+        #
+        #if file.filename == '':
+        #    flash('No selected file')
+        #    return redirect(url_for('main.addassignment'))
+        #if file and valid_filename(file.filename):
+        #    origfilen = secure_filename(file.filename)
+        #    filename = rand_str(16) + origfilen.split(".")[-1]
+        #    file.save(os.path.join(UPLOAD_DIR, filename))
+        filename="doesnotexist.pdf"
+        newAssignment = Assignment(user=user, name=a_name, course=a_course, prof=a_prof, date=a_date, file=filename)
+        db.session.add(newAssignment)
+        db.session.commit()
+        return redirect(url_for('main.index', name=filename))
+        
 
 def errorhandler(e):
     # Handle Errors

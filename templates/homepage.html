@@ -7,19 +7,26 @@
 {% block main %}
 <div class="main">
     <div class="search-bar-container">
-        <input class="search-bar" type="text" size="100">
-        <input class="search-button" type="button" value="Search">
+        <form method="POST">
+            <input class="search-bar" type="text" name="search" size="100">
+            <input class="search-button" type="submit" value="Search">
+        </form>
     </div>
+</br>
     <div class="assignments">
-        <h3 id="results-title">Results</h3>
-        <!-- Sample card to show assignment -->
+        {% if results %}
+        {% autoescape false %}
+            <h3 id="results-title">Results</h3>
+            {{ results }}
+        {% endautoescape %}
+        {% endif %}
+        <!-- Sample card to show assignment 
         <div class="assignment-card">
             <span><a href=""><h4 class="assignment-card-link">Name</h6></a></span><br>
             <span>Class</span><br>
             <span>Instructor</span><br>
             <span>Submission Date</span><br>
         </div>
-        <!--  -->
         <div class="assignment-card">
             <span><a href=""><h4 class="assignment-card-link">Name</h6></a></span><br>
             <span>Class</span><br>
@@ -31,8 +38,7 @@
             <span>Class</span><br>
             <span>Instructor</span><br>
             <span>Submission Date</span><br>
-        </div>
-        <!--  -->
+        </div> -->
     </div>
 </div>
 {% endblock %}

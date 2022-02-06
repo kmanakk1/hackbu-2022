@@ -6,7 +6,14 @@
 
 {% block main %} 
 <div class="main">
-    <form class="assignment-form">
+    <form class="assignment-form" method="POST">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
         <h3>Assignment Details</h3>
         <div class="assignment-field">
             <label for="name">Name </label><br>

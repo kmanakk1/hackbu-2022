@@ -19,7 +19,7 @@ def create_app():
     loginManager.login_view = 'auth.login'
     loginManager.init_app(app)
 
-    from models import User
+    from models import User, Assignment, Answer
     @loginManager.user_loader
     def load_user(uid):
         return User.query.get(int(uid))
