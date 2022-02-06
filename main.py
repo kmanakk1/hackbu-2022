@@ -98,4 +98,6 @@ for code in default_exceptions:
 
 if __name__ == "__main__":
     db.create_all(app=create_app()) # create and initialize database
+    if not os.path.exists(UPLOAD_DIR):
+        os.makedirs(UPLOAD_DIR)
     app.run()
